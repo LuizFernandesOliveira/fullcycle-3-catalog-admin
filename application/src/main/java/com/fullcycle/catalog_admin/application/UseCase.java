@@ -1,10 +1,7 @@
 package com.fullcycle.catalog_admin.application;
 
-import com.fullcycle.catalog_admin.domain.category.Category;
 
-public class UseCase {
+public abstract class UseCase<IN, OUT> {
 
-  public Category execute() {
-    return Category.newCategory(null, null,  false);
-  }
+  public abstract OUT execute(IN input);
 }

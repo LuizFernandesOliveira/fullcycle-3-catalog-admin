@@ -2,7 +2,6 @@ package com.fullcycle.catalog_admin.domain.validation.handler;
 
 import com.fullcycle.catalog_admin.domain.exception.DomainException;
 import com.fullcycle.catalog_admin.domain.validation.Error;
-import com.fullcycle.catalog_admin.domain.validation.Validation;
 import com.fullcycle.catalog_admin.domain.validation.ValidationHandler;
 
 import java.util.List;
@@ -17,16 +16,6 @@ public class ThrowsValidationHandler implements ValidationHandler {
   @Override
   public ValidationHandler append(final ValidationHandler anHandler) {
     throw DomainException.with(anHandler.getErrors());
-  }
-
-  @Override
-  public ValidationHandler validate(final Validation aValidation) {
-    try {
-      aValidation.validate();
-    } catch (Exception e) {
-      throw DomainException.with(List.of(new Error(e.getMessage())));
-    }
-    return this;
   }
 
   @Override

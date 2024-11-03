@@ -1,11 +1,9 @@
 package com.fullcycle.catalog_admin.application.category.create;
 
-import com.fullcycle.catalog_admin.domain.category.Category;
 import com.fullcycle.catalog_admin.domain.category.CategoryGateway;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.AdditionalAnswers;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -22,9 +20,6 @@ class CreateCategoryUseCaseTest {
   @Mock
   private CategoryGateway categoryGateway;
 
-  @InjectMocks
-  private CreateCategoryUseCase createCategoryUseCase;
-
   @Test
   void givenAValidCommand_whenCallsCreateCategory_shouldReturnCategoryID() {
     final var expectedName = "Category Name";
@@ -35,9 +30,10 @@ class CreateCategoryUseCaseTest {
     when(categoryGateway.create(any()))
         .thenAnswer(AdditionalAnswers.returnsFirstArg());
 
-    final var actualOutput = createCategoryUseCase.execute(command);
+    final var useCase = new DefaultCreateCategoryUseCase(categoryGateway);
+    final var actualOutput = useCase.execute(command);
     assertNotNull(actualOutput);
-    assertNotNull(actualOutput.getId());
+    assertNotNull(actualOutput.id());
     verify(categoryGateway).create(argThat(category -> {
       return Objects.equals(category.getName(), expectedName) &&
           Objects.equals(category.getDescription(), expectedDescription) &&
@@ -47,5 +43,4 @@ class CreateCategoryUseCaseTest {
           Objects.isNull(category.getDeletedAt());
     }));
   }
-
 }

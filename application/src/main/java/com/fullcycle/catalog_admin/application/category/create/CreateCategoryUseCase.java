@@ -1,4 +1,6 @@
 package com.fullcycle.catalog_admin.application.category.create;
 
-public class CreateCategoryUseCase {
+import com.fullcycle.catalog_admin.application.UseCase;
+
+public abstract class CreateCategoryUseCase extends UseCase<CreateCategoryCommand, CreateCategoryOutput> {
 }
